@@ -1,0 +1,94 @@
+---
+layout: layouts/base.njk
+---
+
+{% set placeVisits = collections.visitsByPlace[slug] or [] %}
+{% set avgRating = ratings | averageRating %}
+
+<article class="place-detail">
+  <!-- Hero Image -->
+  {% set heroPath = "/assets/places/" + slug + "/hero.jpg" %}
+  <div class="hero-placeholder">No photo yet</div>
+
+  <header class="place-header">
+    <div class="place-meta">
+      <span class="type-badge">{{ type }}</span>
+      <span>{{ location.city }}, {{ location.country }}</span>
+    </div>
+
+    <h1 class="place-title">{{ title }}</h1>
+
+    <!-- Ratings -->
+    <div class="place-ratings">
+      <div class="rating">
+        <span class="rating-label">Naveen</span>
+        {% stars ratings.naveen %}
+      </div>
+      <div class="rating">
+        <span class="rating-label">Rachel</span>
+        {% stars ratings.rachel %}
+      </div>
+      <div class="rating">
+        <span class="rating-label">Average</span>
+        {% stars avgRating %}
+      </div>
+    </div>
+
+    <!-- Links -->
+    <div class="place-links">
+      {% if map_url %}
+      <a href="{{ map_url }}" target="_blank" rel="noopener">View on Map</a>
+      {% endif %}
+      {% if website %}
+      <a href="{{ website }}" target="_blank" rel="noopener">Website</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Description -->
+  <div class="place-description">
+    {{ content | safe }}
+  </div>
+
+  <!-- Visit Timeline -->
+  <section class="timeline">
+    <h2 class="timeline-title">Our Visits</h2>
+
+    {% if placeVisits.length > 0 %}
+      {% for visit in placeVisits %}
+      <article class="card">
+        <div class="card-meta">
+          <span>{{ visit.data.date | formatDate }}</span>
+        </div>
+        <h3 class="card-title">
+          <a href="/places/{{ slug }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
+        </h3>
+        <p class="card-excerpt">{{ visit.content | striptags | truncate(150) }}</p>
+      </article>
+      {% endfor %}
+    {% else %}
+      <p class="empty-state">No visits logged yet.</p>
+    {% endif %}
+  </section>
+</article>
+
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{% if type == 'cafe' %}CafeOrCoffeeShop{% elif type == 'restaurant' %}Restaurant{% elif type == 'stay' %}LodgingBusiness{% else %}LocalBusiness{% endif %}",
+  "name": "{{ title }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "{{ location.city }}",
+    "addressCountry": "{{ location.country }}"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ avgRating }}",
+    "bestRating": "5",
+    "ratingCount": "2"
+  }
+}
+</script>
+{% endblock %}

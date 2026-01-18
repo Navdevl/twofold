@@ -1,0 +1,15 @@
+<header class="site-header">
+  <div class="container">
+    <div class="site-brand">
+      <h1 class="site-title">
+        <a href="/">Twofold</a>
+        <span class="site-tagline">places we returned to</span>
+      </h1>
+    </div>
+    <nav class="site-nav">
+      <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a>
+      <a href="/about/" {% if page.url == "/about/" %}class="active"{% endif %}>About</a>
+      <a href="/places/" {% if page.url == "/places/" or page.url.startsWith("/places/") %}class="active"{% endif %}>Places</a>
+    </nav>
+  </div>
+</header>

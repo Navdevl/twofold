@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+---
+
+{% set placeData = collections.places | getPlace(place) %}
+
+<article class="log-detail">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="/places/">Places</a>
+    <span>→</span>
+    <a href="/places/{{ place }}/">{{ placeData.data.title }}</a>
+    <span>→</span>
+    <span>{{ date | formatDate }}</span>
+  </nav>
+
+  <header class="log-header">
+    <div class="log-date">{{ date | formatDate }}</div>
+    <h1>{{ title }}</h1>
+
+    <!-- Place context -->
+    <div class="card-meta">
+      <span class="type-badge">{{ placeData.data.type }}</span>
+      <span>{{ placeData.data.location.city }}, {{ placeData.data.location.country }}</span>
+      <span class="rating">
+        {% stars placeData.data.ratings | averageRating %}
+      </span>
+    </div>
+  </header>
+
+  <!-- Log content -->
+  <div class="log-content">
+    {{ content | safe }}
+  </div>
+
+  <!-- Back to place -->
+  <p style="margin-top: var(--spacing-xl);">
+    <a href="/places/{{ place }}/">← All visits to {{ placeData.data.title }}</a>
+  </p>
+</article>

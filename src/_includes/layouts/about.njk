@@ -1,0 +1,32 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="about-page">
+  <h1>{{ title }}</h1>
+
+  <!-- Dynamic Stats -->
+  {% set totalPlaces = collections.places.length %}
+  {% set totalVisits = collections.visits.length %}
+  {% set cities = collections.places | uniqueCities %}
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">{{ totalPlaces }}</div>
+      <div class="stat-label">Places</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ totalVisits }}</div>
+      <div class="stat-label">Visits</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ cities.length }}</div>
+      <div class="stat-label">Cities</div>
+    </div>
+  </div>
+
+  <!-- Content from markdown -->
+  <div class="about-content">
+    {{ content | safe }}
+  </div>
+</article>

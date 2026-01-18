@@ -1,0 +1,68 @@
+---
+layout: layouts/base.njk
+title: Home
+description: Places we returned to — A personal archive by Naveen & Rachel
+permalink: /
+---
+
+{% set currentYear = "" | currentYear %}
+{% set years = collections.visitsByYear | getYears %}
+{% set visitsThisYear = collections.visitsByYear[currentYear] or [] %}
+
+<!-- Year Navigation -->
+<nav class="year-nav">
+  {% for year in years %}
+    <a href="{% if year == currentYear %}/{% else %}/{{ year }}/{% endif %}"
+       {% if year == currentYear %}class="active"{% endif %}>
+      {{ year }}
+    </a>
+  {% endfor %}
+</nav>
+
+<!-- Timeline Grid -->
+{% if visitsThisYear.length > 0 %}
+<div class="timeline-grid">
+  <!-- Year Marker -->
+  <div class="timeline-year-marker">
+    <span>{{ currentYear }}</span>
+  </div>
+
+  {% for visit in visitsThisYear %}
+    {% set placeData = collections.places | getPlace(visit.data.place) %}
+    <div class="timeline-item">
+      <!-- Date bubble -->
+      <div class="timeline-date">
+        <span class="day">{{ visit.data.date | getDay }}</span>
+        <span class="month">{{ visit.data.date | getMonth }}</span>
+      </div>
+
+      <!-- Card -->
+      <article class="timeline-card">
+        <div class="timeline-card-content">
+          <h2 class="timeline-card-title">
+            <a href="/places/{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
+          </h2>
+
+          <p class="timeline-card-place">
+            at <a href="/places/{{ visit.data.place }}/">{{ placeData.data.title }}</a>
+          </p>
+
+          <p class="timeline-card-excerpt">{{ visit.content | striptags | truncate(120) }}</p>
+
+          <div class="timeline-card-footer">
+            <div class="timeline-card-tags">
+              <span class="type-badge">{{ placeData.data.type }}</span>
+              <span class="type-badge">{{ placeData.data.location.city }}</span>
+            </div>
+            <a href="/places/{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/" class="timeline-card-link">
+              Continue reading →
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+  <p class="empty-state">No visits logged for {{ currentYear }} yet.</p>
+{% endif %}

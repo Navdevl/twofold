@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: Places
+description: All the places we've visited and returned to
+permalink: /places/
+---
+
+<h1>Places</h1>
+<p>All the cafes, restaurants, and stays we've logged.</p>
+
+<ul class="place-list">
+  {% for place in collections.places %}
+  <li class="place-list-item">
+    <div class="place-list-info">
+      <a href="/places/{{ place.data.slug }}/" class="place-list-name">{{ place.data.title }}</a>
+      <div class="place-list-meta">
+        <span class="type-badge">{{ place.data.type }}</span>
+        <span>{{ place.data.location.city }}, {{ place.data.location.country }}</span>
+      </div>
+    </div>
+    <div class="rating">
+      {% stars place.data.ratings | averageRating %}
+    </div>
+  </li>
+  {% else %}
+  <li class="empty-state">No places yet.</li>
+  {% endfor %}
+</ul>

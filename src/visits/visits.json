@@ -1,0 +1,4 @@
+{
+  "layout": "layouts/log.njk",
+  "permalink": "/places/{{ place }}/log/{{ date | dateSlug }}/"
+}

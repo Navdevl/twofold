@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ title }}{% endblock %} | Twofold</title>
+  <meta name="description" content="{% block description %}{{ description | default('Places we returned to — A personal archive by Naveen & Rachel') }}{% endblock %}">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ page.url | url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ title }} | Twofold">
+  <meta property="og:description" content="{{ description | default('Places we returned to — A personal archive by Naveen & Rachel') }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | url }}">
+  <meta property="og:site_name" content="Twofold">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ title }} | Twofold">
+  <meta name="twitter:description" content="{{ description | default('Places we returned to — A personal archive by Naveen & Rachel') }}">
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  {% include "partials/header.njk" %}
+
+  <main>
+    <div class="container">
+      {% block content %}{{ content | safe }}{% endblock %}
+    </div>
+  </main>
+
+  {% include "partials/footer.njk" %}
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img src="" alt="">
+  </div>
+
+  <script>
+    (function() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = lightbox.querySelector('img');
+      const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+      // Open lightbox when clicking photos in .log-photos
+      document.querySelectorAll('.log-photos img').forEach(img => {
+        img.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightbox.classList.add('active');
+        });
+      });
+
+      // Close lightbox
+      lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') lightbox.classList.remove('active');
+      });
+    })();
+  </script>
+</body>
+</html>
