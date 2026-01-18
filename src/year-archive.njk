@@ -17,7 +17,7 @@ eleventyComputed:
 <!-- Year Navigation -->
 <nav class="year-nav">
   {% for y in years %}
-    <a href="{% if y == currentYear %}/{% else %}/{{ y }}/{% endif %}"
+    <a href="{% if y == currentYear %}{{ '/' | url }}{% else %}{{ '/' | url }}{{ y }}/{% endif %}"
        {% if y == year %}class="active"{% endif %}>
       {{ y }}
     </a>
@@ -45,11 +45,11 @@ eleventyComputed:
       <article class="timeline-card">
         <div class="timeline-card-content">
           <h2 class="timeline-card-title">
-            <a href="/places/{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
+            <a href="{{ '/places/' | url }}{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
           </h2>
 
           <p class="timeline-card-place">
-            at <a href="/places/{{ visit.data.place }}/">{{ placeData.data.title }}</a>
+            at <a href="{{ '/places/' | url }}{{ visit.data.place }}/">{{ placeData.data.title }}</a>
           </p>
 
           <p class="timeline-card-excerpt">{{ visit.content | striptags | truncate(120) }}</p>
@@ -59,7 +59,7 @@ eleventyComputed:
               <span class="type-badge">{{ placeData.data.type }}</span>
               <span class="type-badge">{{ placeData.data.location.city }}</span>
             </div>
-            <a href="/places/{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/" class="timeline-card-link">
+            <a href="{{ '/places/' | url }}{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/" class="timeline-card-link">
               Continue reading →
             </a>
           </div>

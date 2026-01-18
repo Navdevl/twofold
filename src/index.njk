@@ -12,7 +12,7 @@ permalink: /
 <!-- Year Navigation -->
 <nav class="year-nav">
   {% for year in years %}
-    <a href="{% if year == currentYear %}/{% else %}/{{ year }}/{% endif %}"
+    <a href="{% if year == currentYear %}{{ '/' | url }}{% else %}{{ '/' | url }}{{ year }}/{% endif %}"
        {% if year == currentYear %}class="active"{% endif %}>
       {{ year }}
     </a>
@@ -40,11 +40,11 @@ permalink: /
       <article class="timeline-card">
         <div class="timeline-card-content">
           <h2 class="timeline-card-title">
-            <a href="/places/{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
+            <a href="{{ '/places/' | url }}{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
           </h2>
 
           <p class="timeline-card-place">
-            at <a href="/places/{{ visit.data.place }}/">{{ placeData.data.title }}</a>
+            at <a href="{{ '/places/' | url }}{{ visit.data.place }}/">{{ placeData.data.title }}</a>
           </p>
 
           <p class="timeline-card-excerpt">{{ visit.content | striptags | truncate(120) }}</p>
@@ -54,7 +54,7 @@ permalink: /
               <span class="type-badge">{{ placeData.data.type }}</span>
               <span class="type-badge">{{ placeData.data.location.city }}</span>
             </div>
-            <a href="/places/{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/" class="timeline-card-link">
+            <a href="{{ '/places/' | url }}{{ visit.data.place }}/log/{{ visit.data.date | dateSlug }}/" class="timeline-card-link">
               Continue reading →
             </a>
           </div>

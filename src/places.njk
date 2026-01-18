@@ -12,7 +12,7 @@ permalink: /places/
   {% for place in collections.places %}
   <li class="place-list-item">
     <div class="place-list-info">
-      <a href="/places/{{ place.data.slug }}/" class="place-list-name">{{ place.data.title }}</a>
+      <a href="{{ '/places/' | url }}{{ place.data.slug }}/" class="place-list-name">{{ place.data.title }}</a>
       <div class="place-list-meta">
         <span class="type-badge">{{ place.data.type }}</span>
         <span>{{ place.data.location.city }}, {{ place.data.location.country }}</span>

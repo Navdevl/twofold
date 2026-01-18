@@ -61,7 +61,7 @@ layout: layouts/base.njk
           <span>{{ visit.data.date | formatDate }}</span>
         </div>
         <h3 class="card-title">
-          <a href="/places/{{ slug }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
+          <a href="{{ '/places/' | url }}{{ slug }}/log/{{ visit.data.date | dateSlug }}/">{{ visit.data.title }}</a>
         </h3>
         <p class="card-excerpt">{{ visit.content | striptags | truncate(150) }}</p>
       </article>

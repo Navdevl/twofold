@@ -7,9 +7,9 @@ layout: layouts/base.njk
 <article class="log-detail">
   <!-- Breadcrumb -->
   <nav class="breadcrumb">
-    <a href="/places/">Places</a>
+    <a href="{{ '/places/' | url }}">Places</a>
     <span>→</span>
-    <a href="/places/{{ place }}/">{{ placeData.data.title }}</a>
+    <a href="{{ '/places/' | url }}{{ place }}/">{{ placeData.data.title }}</a>
     <span>→</span>
     <span>{{ date | formatDate }}</span>
   </nav>
@@ -35,6 +35,6 @@ layout: layouts/base.njk
 
   <!-- Back to place -->
   <p style="margin-top: var(--spacing-xl);">
-    <a href="/places/{{ place }}/">← All visits to {{ placeData.data.title }}</a>
+    <a href="{{ '/places/' | url }}{{ place }}/">← All visits to {{ placeData.data.title }}</a>
   </p>
 </article>
