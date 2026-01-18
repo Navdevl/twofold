@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+bun scripts/compress-assets.ts --staged
+
+# Re-stage any changes made by compression
+git add -u assets/
