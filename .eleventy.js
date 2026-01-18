@@ -1,3 +1,5 @@
+const isProduction = process.env.ELEVENTY_ENV === 'production';
+
 module.exports = function(eleventyConfig) {
   // Pass through static assets
   eleventyConfig.addPassthroughCopy("assets");
@@ -152,7 +154,7 @@ module.exports = function(eleventyConfig) {
       includes: "_includes",
       data: "_data"
     },
-    pathPrefix: "/twofold/",
+    pathPrefix: isProduction ? "/twofold/" : "/",
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk"
   };
